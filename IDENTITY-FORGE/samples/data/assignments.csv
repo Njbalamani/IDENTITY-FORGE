@@ -1,0 +1,31 @@
+username,role_code,team,source,active,justification
+aisha.chen1@example.invalid,viewer,security-operations,DIRECT,TRUE,Synthetic baseline assignment
+bryan.rahman2@example.invalid,analyst,cloud-platform,DIRECT,TRUE,Synthetic baseline assignment
+chen.rao3@example.invalid,engineer,finance,DIRECT,TRUE,Synthetic baseline assignment
+dana.garcia4@example.invalid,reviewer,clinical-systems,DIRECT,TRUE,Synthetic baseline assignment
+elena.haddad5@example.invalid,cloud_operator,internal-audit,DIRECT,TRUE,Synthetic baseline assignment
+farid.patel6@example.invalid,finance_approver,security-operations,DIRECT,TRUE,Synthetic baseline assignment
+grace.kim7@example.invalid,viewer,cloud-platform,DIRECT,TRUE,Synthetic baseline assignment
+hugo.weber8@example.invalid,analyst,finance,DIRECT,TRUE,Synthetic baseline assignment
+imani.novak9@example.invalid,engineer,clinical-systems,DIRECT,TRUE,Synthetic baseline assignment
+jonas.murphy10@example.invalid,reviewer,internal-audit,DIRECT,TRUE,Synthetic baseline assignment
+kavya.okafor11@example.invalid,cloud_operator,security-operations,DIRECT,TRUE,Synthetic baseline assignment
+liam.silva12@example.invalid,finance_approver,cloud-platform,DIRECT,TRUE,Synthetic baseline assignment
+aisha.chen13@example.invalid,viewer,finance,DIRECT,TRUE,Synthetic baseline assignment
+bryan.rahman14@example.invalid,analyst,clinical-systems,DIRECT,TRUE,Synthetic baseline assignment
+chen.rao15@example.invalid,engineer,internal-audit,DIRECT,TRUE,Synthetic baseline assignment
+dana.garcia16@example.invalid,reviewer,security-operations,DIRECT,TRUE,Synthetic baseline assignment
+elena.haddad17@example.invalid,cloud_operator,cloud-platform,DIRECT,TRUE,Synthetic baseline assignment
+farid.patel18@example.invalid,finance_approver,finance,DIRECT,TRUE,Synthetic baseline assignment
+grace.kim19@example.invalid,viewer,clinical-systems,DIRECT,TRUE,Synthetic baseline assignment
+hugo.weber20@example.invalid,analyst,internal-audit,DIRECT,TRUE,Synthetic baseline assignment
+imani.novak21@example.invalid,engineer,security-operations,DIRECT,TRUE,Synthetic baseline assignment
+jonas.murphy22@example.invalid,reviewer,cloud-platform,DIRECT,TRUE,Synthetic baseline assignment
+kavya.okafor23@example.invalid,cloud_operator,finance,DIRECT,TRUE,Synthetic baseline assignment
+liam.silva24@example.invalid,finance_approver,clinical-systems,DIRECT,TRUE,Synthetic baseline assignment
+aisha.chen1@example.invalid,admin,security-operations,DIRECT,TRUE,Synthetic emergency elevation
+elena.haddad5@example.invalid,auditor,internal-audit,DIRECT,TRUE,Synthetic assurance access
+grace.kim7@example.invalid,admin,cloud-platform,TEAM,TRUE,Synthetic conflicting assignment
+jonas.murphy10@example.invalid,finance_approver,finance,DIRECT,TRUE,Synthetic conflicting assignment
+bryan.rahman14@example.invalid,incident_responder,security-operations,DIRECT,TRUE,Synthetic incident access
+farid.patel18@example.invalid,cloud_operator,cloud-platform,DIRECT,TRUE,Stale assignment for inactive identity

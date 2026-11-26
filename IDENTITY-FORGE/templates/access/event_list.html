@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Access Events · IdentityForge{% endblock %}
+{% block header %}Access Event Stream{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h2>Events</h2><p>Synthetic, imported and live access activity used for anomaly analysis.</p></div></div>
+<div class="chart-grid">
+  <section class="panel">
+    <div class="panel-head"><h3>Import synthetic dataset</h3><span>CSV validation enabled</span></div>
+    <form action="{% url 'event-import' %}" method="post" enctype="multipart/form-data" class="form-grid">{% csrf_token %}
+      <div class="form-field"><label for="{{ import_form.file.id_for_label }}">CSV file</label>{{ import_form.file }}</div>
+      <div class="form-actions"><button class="button button-primary" type="submit">Import events</button></div>
+    </form>
+  </section>
+  <section class="panel">
+    <div class="panel-head"><h3>Filter events</h3><span>{{ events|length }} shown</span></div>
+    <form method="get" class="form-grid">
+      <div class="form-field"><label for="event-type">Event type</label><select class="form-control" id="event-type" name="event_type"><option value="">All</option>{% for value, label in event_types %}<option value="{{ value }}" {% if selected_type == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+      <div class="form-actions"><button class="button" type="submit">Apply filter</button></div>
+    </form>
+  </section>
+</div>
+<section class="panel"><div class="table-wrap"><table><thead><tr><th>Time</th><th>Identity</th><th>Event</th><th>Resource</th><th>IP</th><th>Source</th><th>Result</th></tr></thead><tbody>
+{% for event in events %}<tr><td>{{ event.occurred_at|date:"d M Y H:i" }}</td><td>{{ event.user.username|default:"—" }}</td><td>{{ event.get_event_type_display }}</td><td>{{ event.resource.name|default:"—" }}</td><td>{{ event.ip_address|default:"—" }}</td><td>{{ event.get_source_display }}</td><td>{% if event.success %}<span class="badge badge-success">Success</span>{% else %}<span class="badge badge-high">Failed</span>{% endif %}</td></tr>{% empty %}<tr><td colspan="7"><div class="empty-state">No access events recorded.</div></td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

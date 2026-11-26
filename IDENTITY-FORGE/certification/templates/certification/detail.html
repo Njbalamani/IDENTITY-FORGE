@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ campaign.name }} · IdentityForge{% endblock %}
+{% block header %}{{ campaign.name }}{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div><h2>{{ campaign.get_status_display }}</h2><p>Due {{ campaign.due_date }} · created by {{ campaign.created_by.username|default:"system" }}</p></div>
+  {% if can_manage and campaign.status == "ACTIVE" %}<form action="{% url 'campaign-apply' campaign.id %}" method="post">{% csrf_token %}<button class="button button-primary" type="submit">Apply decisions</button></form>{% endif %}
+</div>
+<div class="metric-grid">
+  <article class="metric-card"><div class="metric-label">Items</div><div class="metric-value">{{ campaign.item_count }}</div><div class="metric-note">Active assignments</div></article>
+  <article class="metric-card"><div class="metric-label">Decided</div><div class="metric-value">{{ campaign.decided_count }}</div><div class="metric-note">Approved, revoked or exception</div></article>
+  <article class="metric-card"><div class="metric-label">Pending</div><div class="metric-value">{{ campaign.pending_count }}</div><div class="metric-note">Awaiting reviewer</div></article>
+  <article class="metric-card"><div class="metric-label">Reviewers</div><div class="metric-value">{{ campaign.reviewers.count }}</div><div class="metric-note">Assigned identities</div></article>
+</div>
+<section class="panel">
+  <div class="panel-head"><h3>Certification items</h3><span>Snapshotted access</span></div>
+  {% if items %}
+  <div class="table-wrap"><table><thead><tr><th>Identity</th><th>Role</th><th>Decision</th><th>Decided by</th><th>Action</th></tr></thead><tbody>
+    {% for item in items %}<tr>
+      <td>{{ item.user.username }}</td><td>{{ item.role.name }}</td><td>{{ item.get_decision_display }}</td><td>{{ item.decided_by.username|default:"—" }}</td>
+      <td>{% if can_decide and campaign.status == "ACTIVE" %}<form action="{% url 'campaign-item-decide' item.id %}" method="post" class="inline-form">{% csrf_token %}<select name="decision"><option value="APPROVED">Approve</option><option value="REVOKED">Revoke</option><option value="EXCEPTION">Exception</option></select><input type="text" name="note" placeholder="Note" maxlength="240"><button class="ghost-button" type="submit">Save</button></form>{% else %}—{% endif %}</td>
+    </tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<div class="empty-state">No active assignments were available when this campaign was created.</div>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Risk Findings · IdentityForge{% endblock %}
+{% block header %}Risk Findings{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div><h2>Evidence queue</h2><p>Every finding is derived from permissions, graphs, events or Zero Trust rules.</p></div>
+  <div class="inline-form"><a class="button" href="/api/findings/export/">Export CSV</a><form action="{% url 'run-analysis' %}" method="post">{% csrf_token %}<input type="hidden" name="next" value="findings"><button class="button button-primary" type="submit">Run assessment</button></form></div>
+</div>
+<section class="panel">
+  <form method="get" class="form-grid">
+    <div class="form-field"><label for="category">Category</label><select class="form-control" name="category" id="category"><option value="">All</option>{% for value, label in categories %}<option value="{{ value }}" {% if selected_category == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+    <div class="form-field"><label for="status">Status</label><select class="form-control" name="status" id="status"><option value="">All</option>{% for value, label in statuses %}<option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+    <div class="form-actions"><button class="button" type="submit">Apply filters</button></div>
+  </form>
+</section>
+<section class="panel">
+  <div class="table-wrap"><table><thead><tr><th>Severity</th><th>Finding</th><th>Category</th><th>NIST CSF</th><th>Score</th><th>Status</th><th>Review</th></tr></thead><tbody>
+  {% for finding in findings %}<tr>
+    <td><span class="badge badge-{{ finding.severity|lower }}">{{ finding.get_severity_display }}</span></td>
+    <td><strong>{{ finding.title }}</strong><br><small>{{ finding.description }}</small></td>
+    <td>{{ finding.get_category_display }}</td><td>{{ finding.nist_controls|join:", " }}</td><td>{{ finding.score }}</td>
+    <td><span class="badge badge-{{ finding.status|lower }}">{{ finding.get_status_display }}</span></td>
+    <td><form action="{% url 'finding-review' finding.id %}" method="post" class="review-form">{% csrf_token %}<select class="form-control" name="status">{% for value, label in statuses %}<option value="{{ value }}" {% if finding.status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select><input class="form-control" type="text" name="note" placeholder="Note"><button class="button" type="submit">Save</button></form></td>
+  </tr>{% empty %}<tr><td colspan="7"><div class="empty-state">No findings match the current filters.</div></td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+{% endblock %}

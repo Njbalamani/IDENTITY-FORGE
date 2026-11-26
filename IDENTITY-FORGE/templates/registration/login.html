@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Sign in · IdentityForge{% endblock %}
+{% block content %}
+<div class="login-page">
+  <div class="login-card">
+    <div class="brand"><span class="brand-mark">IF</span><span class="brand-copy"><strong>IdentityForge</strong><small>ACCESS RISK COMMAND</small></span></div>
+    <h2>Welcome back</h2>
+    <p>Sign in to review identity risk, access graphs and Zero Trust evidence.</p>
+    <form method="post">{% csrf_token %}
+      {{ form.non_field_errors }}
+      <div class="form-field"><label for="{{ form.username.id_for_label }}">Username</label>{{ form.username }}</div>
+      <div class="form-field"><label for="{{ form.password.id_for_label }}">Password</label>{{ form.password }}</div>
+      <button class="button button-primary" type="submit">Sign in</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

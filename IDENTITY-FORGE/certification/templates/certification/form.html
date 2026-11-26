@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}New Certification · IdentityForge{% endblock %}
+{% block header %}{{ title }}{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h2>Certification setup</h2><p>The campaign snapshots every active role assignment at creation time.</p></div></div>
+<section class="panel">
+  <form method="post" class="stacked-form">{% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-actions"><button class="button button-primary" type="submit">Create campaign</button><a class="button" href="{% url 'campaigns' %}">Cancel</a></div>
+  </form>
+</section>
+{% endblock %}

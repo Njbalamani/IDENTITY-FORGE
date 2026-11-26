@@ -1,0 +1,89 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="IdentityForge identity and access risk management platform">
+  <title>{% block title %}IdentityForge{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script src="{% static 'js/graph.js' %}" defer></script>
+  <script src="{% static 'js/charts.js' %}" defer></script>
+  <script src="{% static 'js/animations.js' %}" defer></script>
+  <script src="{% static 'js/main.js' %}" defer></script>
+</head>
+<body class="{% if user.is_authenticated %}authenticated{% else %}public{% endif %}">
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="app-shell">
+    {% if user.is_authenticated %}
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="{% url 'dashboard' %}">
+        <span class="brand-mark">IF</span>
+        <span class="brand-copy"><strong>IdentityForge</strong><small>ACCESS RISK COMMAND</small></span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <p class="nav-label">Command</p>
+        <a href="{% url 'dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"><span class="nav-icon">01</span>Overview</a>
+        <a href="{% url 'graph' %}" class="nav-link {% if request.resolver_match.url_name == 'graph' %}active{% endif %}"><span class="nav-icon">02</span>Access Graph</a>
+        <a href="{% url 'findings' %}" class="nav-link {% if request.resolver_match.url_name == 'findings' %}active{% endif %}"><span class="nav-icon">03</span>Risk Findings</a>
+        <a href="{% url 'anomalies' %}" class="nav-link {% if request.resolver_match.url_name == 'anomalies' %}active{% endif %}"><span class="nav-icon">04</span>Anomalies</a>
+        <a href="{% url 'zero-trust' %}" class="nav-link {% if request.resolver_match.url_name == 'zero-trust' %}active{% endif %}"><span class="nav-icon">05</span>Zero Trust</a>
+        <p class="nav-label">Identity</p>
+        <a href="{% url 'users' %}" class="nav-link {% if request.resolver_match.url_name == 'users' %}active{% endif %}"><span class="nav-icon">06</span>Identities</a>
+        <a href="{% url 'teams' %}" class="nav-link {% if request.resolver_match.url_name == 'teams' %}active{% endif %}"><span class="nav-icon">07</span>Teams</a>
+        <a href="{% url 'profiles' %}" class="nav-link {% if request.resolver_match.url_name == 'profiles' %}active{% endif %}"><span class="nav-icon">08</span>Profiles</a>
+        <a href="{% url 'roles' %}" class="nav-link {% if request.resolver_match.url_name == 'roles' %}active{% endif %}"><span class="nav-icon">09</span>Roles</a>
+        <a href="{% url 'permissions' %}" class="nav-link {% if request.resolver_match.url_name == 'permissions' %}active{% endif %}"><span class="nav-icon">10</span>Permissions</a>
+        <a href="{% url 'assignments' %}" class="nav-link {% if request.resolver_match.url_name == 'assignments' %}active{% endif %}"><span class="nav-icon">11</span>Assignments</a>
+        <p class="nav-label">Evidence</p>
+        <a href="{% url 'events' %}" class="nav-link {% if request.resolver_match.url_name == 'events' %}active{% endif %}"><span class="nav-icon">12</span>Access Events</a>
+        <a href="{% url 'reviews' %}" class="nav-link {% if request.resolver_match.url_name == 'reviews' %}active{% endif %}"><span class="nav-icon">13</span>Access Reviews</a>
+        <a href="{% url 'reports' %}" class="nav-link {% if request.resolver_match.url_name == 'reports' %}active{% endif %}"><span class="nav-icon">14</span>Reports</a>
+        <a href="{% url 'audit' %}" class="nav-link {% if request.resolver_match.url_name == 'audit' %}active{% endif %}"><span class="nav-icon">15</span>Audit Trail</a>
+        <a href="{% url 'analysis-runs' %}" class="nav-link {% if request.resolver_match.url_name == 'analysis-runs' %}active{% endif %}"><span class="nav-icon">16</span>Analysis Runs</a>
+        <a href="{% url 'campaigns' %}" class="nav-link {% if request.resolver_match.url_name == 'campaigns' or request.resolver_match.url_name == 'campaign-detail' %}active{% endif %}"><span class="nav-icon">17</span>Certifications</a>
+      </nav>
+      <div class="sidebar-foot">
+        <span class="status-dot"></span>
+        <span>{{ organization.name|default:"No organization" }}</span>
+      </div>
+    </aside>
+    {% endif %}
+    <main class="main">
+      <header class="topbar">
+        <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Toggle navigation">☰</button>
+        <div class="topbar-title">
+          <span class="eyebrow">IDENTITY SECURITY</span>
+          <h1>{% block header %}IdentityForge{% endblock %}</h1>
+        </div>
+        <div class="topbar-actions">
+          {% if user.is_authenticated %}
+          <span class="role-pill">{{ user.get_platform_role_display }}</span>
+          <span class="user-chip">{{ user.username }}</span>
+          <form action="{% url 'logout' %}" method="post" class="inline-form">{% csrf_token %}<button class="ghost-button" type="submit">Sign out</button></form>
+          {% else %}
+          <a class="ghost-button" href="{% url 'login' %}">Sign in</a>
+          {% endif %}
+        </div>
+      </header>
+      <div class="message-stack">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      <section class="content">
+        {% block content %}{% endblock %}
+      </section>
+      <footer class="footer">
+        <span>{{ platform_name }} · Synthetic identity data only</span>
+        <span>{{ ai_disclaimer }}</span>
+      </footer>
+    </main>
+  </div>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,25 @@
+username,email,display_name,platform_role,organization_slug,status,team,mfa_enabled,session_timeout_minutes,employee_id,department,title
+aisha.chen1@example.invalid,aisha.chen1@example.invalid,Aisha Chen,VIEWER,northstar-health,ACTIVE,security-operations,True,30,IF-1000,Security Operations,Synthetic Role
+bryan.rahman2@example.invalid,bryan.rahman2@example.invalid,Bryan Rahman,SECURITY_ANALYST,northstar-health,ACTIVE,cloud-platform,True,30,IF-1001,Cloud Platform,Synthetic Role
+chen.rao3@example.invalid,chen.rao3@example.invalid,Chen Rao,REVIEWER,northstar-health,ACTIVE,finance,True,30,IF-1002,Finance,Synthetic Role
+dana.garcia4@example.invalid,dana.garcia4@example.invalid,Dana Garcia,SECURITY_ANALYST,northstar-health,ACTIVE,clinical-systems,True,90,IF-1003,Clinical Systems,Synthetic Role
+elena.haddad5@example.invalid,elena.haddad5@example.invalid,Elena Haddad,VIEWER,northstar-health,ACTIVE,internal-audit,True,30,IF-1004,Internal Audit,Synthetic Role
+farid.patel6@example.invalid,farid.patel6@example.invalid,Farid Patel,ADMIN,northstar-health,ACTIVE,security-operations,False,30,IF-1005,Security Operations,Synthetic Role
+grace.kim7@example.invalid,grace.kim7@example.invalid,Grace Kim,VIEWER,northstar-health,ACTIVE,cloud-platform,True,30,IF-1006,Cloud Platform,Synthetic Role
+hugo.weber8@example.invalid,hugo.weber8@example.invalid,Hugo Weber,SECURITY_ANALYST,northstar-health,ACTIVE,finance,True,30,IF-1007,Finance,Synthetic Role
+imani.novak9@example.invalid,imani.novak9@example.invalid,Imani Novak,REVIEWER,northstar-health,ACTIVE,clinical-systems,True,30,IF-1008,Clinical Systems,Synthetic Role
+jonas.murphy10@example.invalid,jonas.murphy10@example.invalid,Jonas Murphy,SECURITY_ANALYST,northstar-health,ACTIVE,internal-audit,True,30,IF-1009,Internal Audit,Synthetic Role
+kavya.okafor11@example.invalid,kavya.okafor11@example.invalid,Kavya Okafor,VIEWER,northstar-health,ACTIVE,security-operations,True,30,IF-1010,Security Operations,Synthetic Role
+liam.silva12@example.invalid,liam.silva12@example.invalid,Liam Silva,ADMIN,northstar-health,ACTIVE,cloud-platform,True,90,IF-1011,Cloud Platform,Synthetic Role
+aisha.chen13@example.invalid,aisha.chen13@example.invalid,Aisha Chen,VIEWER,northstar-health,ACTIVE,finance,False,30,IF-1012,Finance,Synthetic Role
+bryan.rahman14@example.invalid,bryan.rahman14@example.invalid,Bryan Rahman,SECURITY_ANALYST,northstar-health,ACTIVE,clinical-systems,True,30,IF-1013,Clinical Systems,Synthetic Role
+chen.rao15@example.invalid,chen.rao15@example.invalid,Chen Rao,REVIEWER,northstar-health,ACTIVE,internal-audit,True,30,IF-1014,Internal Audit,Synthetic Role
+dana.garcia16@example.invalid,dana.garcia16@example.invalid,Dana Garcia,SECURITY_ANALYST,northstar-health,ACTIVE,security-operations,True,30,IF-1015,Security Operations,Synthetic Role
+elena.haddad17@example.invalid,elena.haddad17@example.invalid,Elena Haddad,VIEWER,northstar-health,ACTIVE,cloud-platform,True,30,IF-1016,Cloud Platform,Synthetic Role
+farid.patel18@example.invalid,farid.patel18@example.invalid,Farid Patel,ADMIN,northstar-health,INACTIVE,finance,True,30,IF-1017,Finance,Synthetic Role
+grace.kim19@example.invalid,grace.kim19@example.invalid,Grace Kim,VIEWER,northstar-health,ACTIVE,clinical-systems,True,90,IF-1018,Clinical Systems,Synthetic Role
+hugo.weber20@example.invalid,hugo.weber20@example.invalid,Hugo Weber,SECURITY_ANALYST,northstar-health,ACTIVE,internal-audit,False,30,IF-1019,Internal Audit,Synthetic Role
+imani.novak21@example.invalid,imani.novak21@example.invalid,Imani Novak,REVIEWER,northstar-health,ACTIVE,security-operations,True,30,IF-1020,Security Operations,Synthetic Role
+jonas.murphy22@example.invalid,jonas.murphy22@example.invalid,Jonas Murphy,SECURITY_ANALYST,northstar-health,INACTIVE,cloud-platform,True,30,IF-1021,Cloud Platform,Synthetic Role
+kavya.okafor23@example.invalid,kavya.okafor23@example.invalid,Kavya Okafor,VIEWER,northstar-health,ACTIVE,finance,True,30,IF-1022,Finance,Synthetic Role
+liam.silva24@example.invalid,liam.silva24@example.invalid,Liam Silva,ADMIN,northstar-health,ACTIVE,clinical-systems,True,30,IF-1023,Clinical Systems,Synthetic Role

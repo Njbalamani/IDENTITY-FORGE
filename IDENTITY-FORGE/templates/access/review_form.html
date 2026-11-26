@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} · IdentityForge{% endblock %}
+{% block header %}{{ title }}{% endblock %}
+{% block content %}
+<section class="panel"><form method="post" class="form-grid">{% csrf_token %}
+{% for field in form %}<div class="form-field {% if field.name == 'notes' %}full{% endif %}"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{{ field.errors }}</div>{% endfor %}
+<div class="form-actions"><button class="button button-primary" type="submit">Create review</button><a class="button" href="{% url 'reviews' %}">Cancel</a></div>
+</form></section>
+{% endblock %}

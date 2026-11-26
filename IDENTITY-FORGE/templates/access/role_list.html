@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Roles · IdentityForge{% endblock %}
+{% block header %}Permission Roles{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h2>Roles and inheritance</h2><p>Privileged roles and inherited grants are analyzed for escalation paths.</p></div><a class="button button-primary" href="{% url 'role-create' %}">Create role</a></div>
+<section class="panel"><div class="table-wrap"><table><thead><tr><th>Role</th><th>Code</th><th>Privileged</th><th>Permissions</th><th>Inherits</th><th>Risk weight</th></tr></thead><tbody>
+{% for role in roles %}<tr><td>{{ role.name }}</td><td>{{ role.code }}</td><td>{% if role.is_privileged %}<span class="badge badge-high">Privileged</span>{% else %}<span class="badge badge-info">Standard</span>{% endif %}</td><td>{{ role.permissions.count }}</td><td>{{ role.inherits.count }}</td><td>{{ role.risk_weight }}</td></tr>{% empty %}<tr><td colspan="6"><div class="empty-state">No roles recorded.</div></td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

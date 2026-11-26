@@ -1,0 +1,13 @@
+name,resource_type,sensitivity,permissions,description
+identity-console,APPLICATION,CONFIDENTIAL,IDENTITY_READ;IDENTITY_WRITE,Synthetic resource for assessment demonstrations
+claims-warehouse,DATABASE,RESTRICTED,DATA_READ;DATA_EXPORT,Synthetic resource for assessment demonstrations
+payment-ledger,FINANCIAL,RESTRICTED,FINANCE_VIEW;FINANCE_APPROVE,Synthetic resource for assessment demonstrations
+cloud-control-plane,CLOUD,RESTRICTED,CLOUD_VIEW;CLOUD_DEPLOY,Synthetic resource for assessment demonstrations
+endpoint-fleet,ENDPOINT,CONFIDENTIAL,ENDPOINT_CONTROL,Synthetic resource for assessment demonstrations
+audit-archive,FILE_SYSTEM,CONFIDENTIAL,AUDIT_READ,Synthetic resource for assessment demonstrations
+policy-engine,APPLICATION,RESTRICTED,POLICY_EDIT,Synthetic resource for assessment demonstrations
+reporting-portal,APPLICATION,INTERNAL,REPORT_GENERATE,Synthetic resource for assessment demonstrations
+token-service,APPLICATION,RESTRICTED,TOKEN_MANAGE,Synthetic resource for assessment demonstrations
+scheduler-api,APPLICATION,INTERNAL,IDENTITY_READ,Synthetic resource for assessment demonstrations
+research-vault,DATABASE,RESTRICTED,DATA_READ;DATA_DELETE,Synthetic resource for assessment demonstrations
+public-site,APPLICATION,PUBLIC,,Synthetic resource for assessment demonstrations

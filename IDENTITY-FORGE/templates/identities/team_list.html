@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Teams · IdentityForge{% endblock %}
+{% block header %}Organizational Teams{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h2>Teams</h2><p>Synthetic organizational units used for role inheritance.</p></div><a class="button button-primary" href="{% url 'team-create' %}">Create team</a></div>
+<section class="panel"><div class="table-wrap"><table><thead><tr><th>Team</th><th>Parent</th><th>Description</th><th>Members</th></tr></thead><tbody>
+{% for team in teams %}<tr><td>{{ team.name }}</td><td>{{ team.parent.name|default:"—" }}</td><td>{{ team.description|default:"—" }}</td><td>{{ team.members.count }}</td></tr>{% empty %}<tr><td colspan="4"><div class="empty-state">No teams recorded.</div></td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

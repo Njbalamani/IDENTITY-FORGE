@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Reports · IdentityForge{% endblock %}
+{% block header %}Assessment Reports{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h2>PDF evidence packs</h2><p>Reports render current metrics, findings, anomaly evidence and Zero Trust recommendations.</p></div></div>
+<div class="chart-grid">
+  <section class="panel">
+    <div class="panel-head"><h3>Generate report</h3><span>ReportLab PDF</span></div>
+    <form action="{% url 'report-generate' %}" method="post" class="form-grid">{% csrf_token %}
+      <div class="form-field"><label for="report-type">Report type</label><select class="form-control" name="report_type" id="report-type">{% for value, label in report_types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select></div>
+      <div class="form-actions"><button class="button button-primary" type="submit">Generate PDF</button></div>
+    </form>
+  </section>
+</div>
+<section class="panel"><div class="table-wrap"><table><thead><tr><th>Title</th><th>Type</th><th>Created</th><th>File</th></tr></thead><tbody>
+{% for report in reports %}<tr><td>{{ report.title }}</td><td>{{ report.get_report_type_display }}</td><td>{{ report.created_at|date:"d M Y H:i" }}</td><td>{% if report.file %}<a href="{{ report.file.url }}">Download</a>{% else %}—{% endif %}</td></tr>{% empty %}<tr><td colspan="4"><div class="empty-state">No reports generated.</div></td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

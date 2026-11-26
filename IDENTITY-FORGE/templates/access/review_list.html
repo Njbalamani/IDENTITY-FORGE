@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Access Reviews · IdentityForge{% endblock %}
+{% block header %}Access Reviews{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h2>Review workflow</h2><p>Evidence of periodic least-privilege validation.</p></div><a class="button button-primary" href="{% url 'review-create' %}">Create review</a></div>
+<section class="panel"><div class="table-wrap"><table><thead><tr><th>Identity</th><th>Status</th><th>Due</th><th>Reviewer</th><th>Decision</th></tr></thead><tbody>
+{% for review in reviews %}<tr><td>{{ review.user.username }}</td><td><span class="badge badge-{{ review.status|lower }}">{{ review.get_status_display }}</span></td><td>{{ review.due_date|date:"d M Y H:i" }}</td><td>{{ review.reviewer.username|default:"—" }}</td><td>
+{% if review.status == 'PENDING' or review.status == 'IN_PROGRESS' %}<form action="{% url 'review-complete' review.id %}" method="post" class="review-form">{% csrf_token %}<select class="form-control" name="status"><option value="APPROVED">Approve</option><option value="REJECTED">Reject</option></select><button class="button button-primary" type="submit">Save</button></form>{% else %}{{ review.get_status_display }}{% endif %}
+</td></tr>{% empty %}<tr><td colspan="5"><div class="empty-state">No access reviews recorded.</div></td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

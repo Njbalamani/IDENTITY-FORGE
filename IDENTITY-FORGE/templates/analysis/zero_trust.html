@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Zero Trust · IdentityForge{% endblock %}
+{% block header %}Zero Trust Assessment{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h2>Control posture</h2><p>Scores are calculated from identity, role, session, review and lifecycle evidence.</p></div></div>
+{% if assessment %}
+<div class="dashboard-grid">
+  <section class="panel">
+    <div class="panel-head"><h3>Overall score</h3><span>{{ assessment.created_at|date:"d M Y H:i" }}</span></div>
+    <div class="score-ring" style="--score: {{ assessment.score }}"><span class="score-value">{{ assessment.score }}</span></div>
+    <div class="score-bars">{% for item in category_scores %}<div class="score-bar-row"><span>{{ item.label }}</span><div class="score-track"><div class="score-fill" style="width: {{ item.value }}%"></div></div><strong>{{ item.value }}</strong></div>{% endfor %}</div>
+  </section>
+  <section class="panel">
+    <div class="panel-head"><h3>Recommendations</h3><span>Configurable rules</span></div>
+    <ul class="evidence-list">{% for recommendation in assessment.recommendations %}<li>{{ recommendation }}</li>{% endfor %}</ul>
+    <div class="panel-head" style="margin-top:22px"><h3>Findings</h3></div>
+    <ul class="evidence-list">{% for finding in assessment.findings %}<li>{{ finding }}</li>{% endfor %}</ul>
+  </section>
+</div>
+{% else %}<section class="panel"><div class="empty-state">No Zero Trust assessment yet. Run a full assessment from the overview page.</div></section>{% endif %}
+{% endblock %}

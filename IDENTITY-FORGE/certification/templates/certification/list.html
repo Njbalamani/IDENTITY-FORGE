@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Certifications · IdentityForge{% endblock %}
+{% block header %}Access Certifications{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div><h2>Certification campaigns</h2><p>Review active role assignments for {{ organization.name|default:"your workspace" }} and record accountable decisions.</p></div>
+  {% if can_manage %}<a class="button button-primary" href="{% url 'campaign-create' %}">New campaign</a>{% endif %}
+</div>
+<div class="panel">
+  <div class="panel-head"><h3>Campaigns</h3><span>{{ campaigns|length }} total</span></div>
+  {% if campaigns %}
+  <div class="table-wrap"><table><thead><tr><th>Name</th><th>Status</th><th>Due</th><th>Items</th><th>Decided</th><th>Pending</th></tr></thead><tbody>
+    {% for campaign in campaigns %}<tr><td><a href="{% url 'campaign-detail' campaign.id %}">{{ campaign.name }}</a></td><td>{{ campaign.get_status_display }}</td><td>{{ campaign.due_date }}</td><td>{{ campaign.item_count }}</td><td>{{ campaign.decided_count }}</td><td>{{ campaign.pending_count }}</td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<div class="empty-state">No certification campaigns yet. Create one to snapshot current access.</div>{% endif %}
+</div>
+{% endblock %}

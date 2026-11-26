@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Overview · IdentityForge{% endblock %}
+{% block header %}Identity Risk Overview{% endblock %}
+{% block content %}
+{{ metrics|json_script:"dashboard-metrics" }}
+{{ graph_payload|json_script:"graph-data" }}
+<div class="page-heading">
+  <div>
+    <h2>Command center</h2>
+    <p>Live identity, permission and access-risk posture for {{ organization.name|default:"your workspace" }}.</p>
+  </div>
+  <form action="{% url 'run-analysis' %}" method="post">{% csrf_token %}<input type="hidden" name="next" value="dashboard"><button class="button button-primary" type="submit">Run full assessment</button></form>
+</div>
+
+<div class="metric-grid">
+  <article class="metric-card"><div class="metric-label">Total identities</div><div class="metric-value">{{ metrics.total_identities }}</div><div class="metric-note">{{ metrics.active_identities }} active</div></article>
+  <article class="metric-card"><div class="metric-label">Privileged accounts</div><div class="metric-value">{{ metrics.privileged_accounts }}</div><div class="metric-note">Privileged roles assigned</div></article>
+  <article class="metric-card"><div class="metric-label">Excessive permissions</div><div class="metric-value">{{ metrics.excessive_permissions }}</div><div class="metric-note">Open findings</div></article>
+  <article class="metric-card"><div class="metric-label">Suspicious events</div><div class="metric-value">{{ metrics.suspicious_events }}</div><div class="metric-note">Model-flagged activity</div></article>
+  <article class="metric-card"><div class="metric-label">Inactive accounts</div><div class="metric-value">{{ metrics.inactive_accounts }}</div><div class="metric-note">Non-active profiles</div></article>
+  <article class="metric-card"><div class="metric-label">High-risk paths</div><div class="metric-value">{{ metrics.high_risk_relationships }}</div><div class="metric-note">Escalation findings</div></article>
+  <article class="metric-card"><div class="metric-label">Open findings</div><div class="metric-value">{{ metrics.open_findings }}</div><div class="metric-note">Across all categories</div></article>
+  <article class="metric-card"><div class="metric-label">Zero Trust score</div><div class="metric-value">{% if metrics.zero_trust_score is not None %}{{ metrics.zero_trust_score }}{% else %}—{% endif %}</div><div class="metric-note">Latest assessment</div></article>
+  <article class="metric-card"><div class="metric-label">Active campaigns</div><div class="metric-value">{{ metrics.active_campaigns }}</div><div class="metric-note">Access certifications</div></article>
+  <article class="metric-card"><div class="metric-label">Pending certifications</div><div class="metric-value">{{ metrics.pending_certifications }}</div><div class="metric-note">Awaiting reviewer decision</div></article>
+</div>
+
+<div class="dashboard-grid">
+  <section class="panel">
+    <div class="panel-head"><h3>Interactive identity network</h3><span>{{ metrics.graph_summary.node_count }} nodes · {{ metrics.graph_summary.edge_count }} links</span></div>
+    <div class="graph-shell" id="identity-network"></div>
+    <div id="graph-tooltip" class="graph-tooltip"></div>
+    <div class="graph-legend">
+      <span><i class="legend-dot" style="background:#d4af37"></i>User</span>
+      <span><i class="legend-dot" style="background:#6ea8fe"></i>Role</span>
+      <span><i class="legend-dot" style="background:#cbd5e1"></i>Team</span>
+      <span><i class="legend-dot" style="background:#ff6b6b"></i>Resource</span>
+      <span><i class="legend-dot" style="background:#4fd1a5"></i>Permission</span>
+      <a href="{% url 'graph' %}">Open full graph →</a>
+    </div>
+  </section>
+  <section class="panel">
+    <div class="panel-head"><h3>Prioritized findings</h3><a href="{% url 'findings' %}">View all</a></div>
+    {% if findings %}
+    <div class="table-wrap"><table><thead><tr><th>Severity</th><th>Finding</th><th>Score</th></tr></thead><tbody>
+      {% for finding in findings %}<tr><td><span class="badge badge-{{ finding.severity|lower }}">{{ finding.get_severity_display }}</span></td><td>{{ finding.title }}</td><td>{{ finding.score }}</td></tr>{% endfor %}
+    </tbody></table></div>
+    {% else %}<div class="empty-state">No findings yet. Run a full assessment to generate evidence.</div>{% endif %}
+  </section>
+</div>
+
+<div class="chart-grid">
+  <section class="panel"><div class="panel-head"><h3>Role distribution</h3><span>Platform roles</span></div><div class="chart-wrap"><canvas id="role-chart"></canvas></div></section>
+  <section class="panel"><div class="panel-head"><h3>Access event trend</h3><span>Last 7 days</span></div><div class="chart-wrap"><canvas id="event-trend-chart"></canvas></div></section>
+  <section class="panel"><div class="panel-head"><h3>Zero Trust trend</h3><span>Recent assessments</span></div><div class="chart-wrap"><canvas id="zero-trust-trend-chart"></canvas></div></section>
+  <section class="panel"><div class="panel-head"><h3>Findings by category</h3><span>All severities</span></div><div class="chart-wrap"><canvas id="risk-category-chart"></canvas></div></section>
+  <section class="panel">
+    <div class="panel-head"><h3>Latest anomaly evidence</h3><a href="{% url 'anomalies' %}">View all</a></div>
+    {% if anomalies %}
+    <ul class="evidence-list">{% for result in anomalies %}<li><strong>{{ result.user.username }}</strong> · {{ result.event_date }} · score {{ result.anomaly_score }}<br>{{ result.reasons|join:"; " }}</li>{% endfor %}</ul>
+    {% else %}<div class="empty-state">No anomalies flagged for the current dataset.</div>{% endif %}
+  </section>
+</div>
+
+<section class="panel">
+  <div class="panel-head"><h3>Recent access activity</h3><a href="{% url 'events' %}">All events</a></div>
+  {% if recent_events %}
+  <div class="table-wrap"><table><thead><tr><th>Time</th><th>Identity</th><th>Event</th><th>Resource</th><th>Result</th></tr></thead><tbody>
+    {% for event in recent_events %}<tr><td>{{ event.occurred_at|date:"d M H:i" }}</td><td>{{ event.user.username|default:"—" }}</td><td>{{ event.get_event_type_display }}</td><td>{{ event.resource.name|default:"—" }}</td><td>{% if event.success %}<span class="badge badge-success">Success</span>{% else %}<span class="badge badge-high">Failed</span>{% endif %}</td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<div class="empty-state">No access events recorded.</div>{% endif %}
+</section>
+{% endblock %}

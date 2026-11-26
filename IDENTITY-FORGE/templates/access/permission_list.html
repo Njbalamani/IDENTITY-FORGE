@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Permissions · IdentityForge{% endblock %}
+{% block header %}Permission Catalog{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h2>Permissions</h2><p>Risk-weighted permissions used in privilege evaluation.</p></div><a class="button button-primary" href="{% url 'permission-create' %}">Create permission</a></div>
+<section class="panel"><div class="table-wrap"><table><thead><tr><th>Code</th><th>Category</th><th>Risk weight</th><th>High risk</th><th>Description</th></tr></thead><tbody>
+{% for permission in permissions %}<tr><td>{{ permission.code }}</td><td>{{ permission.get_category_display }}</td><td>{{ permission.risk_weight }}</td><td>{% if permission.is_high_risk %}<span class="badge badge-high">Yes</span>{% else %}<span class="badge badge-info">No</span>{% endif %}</td><td>{{ permission.description|default:"—" }}</td></tr>{% empty %}<tr><td colspan="5"><div class="empty-state">No permissions recorded.</div></td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

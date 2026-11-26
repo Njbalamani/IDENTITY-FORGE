@@ -1,0 +1,10 @@
+code,name,description,is_privileged,risk_weight,permissions,inherits,conflicts
+viewer,Viewer,Read-only access to synthetic records,False,1,"['IDENTITY_READ', 'DATA_READ']",[],[]
+analyst,Security Analyst,Investigates identity risk findings,False,2,"['AUDIT_READ', 'REPORT_GENERATE', 'CLOUD_VIEW']",['viewer'],[]
+engineer,Platform Engineer,Maintains cloud and endpoint systems,False,3,"['CLOUD_VIEW', 'ENDPOINT_CONTROL']",['viewer'],[]
+cloud_operator,Cloud Operator,Deploys cloud workloads,True,8,['CLOUD_DEPLOY'],['engineer'],[]
+reviewer,Access Reviewer,Approves access review evidence,False,4,"['REVIEW_SIGN_OFF', 'AUDIT_READ']",['analyst'],[]
+finance_approver,Finance Approver,Approves financial transactions,True,9,"['FINANCE_APPROVE', 'FINANCE_VIEW']",[],['admin']
+incident_responder,Incident Responder,Responds to identity incidents,True,7,"['MFA_RESET', 'TOKEN_MANAGE', 'AUDIT_READ']",['analyst'],[]
+auditor,Auditor,Independent assurance role,False,3,"['AUDIT_READ', 'REPORT_GENERATE']",[],['admin']
+admin,Administrator,Full administrative access,True,10,"['ADMIN_CONSOLE', 'POLICY_EDIT', 'ROLE_ASSIGN', 'DATA_DELETE', 'DATA_EXPORT']",['cloud_operator'],"['finance_approver', 'auditor']"

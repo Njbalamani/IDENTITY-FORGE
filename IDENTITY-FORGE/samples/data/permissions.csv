@@ -1,0 +1,19 @@
+code,name,category,risk_weight,is_high_risk,description
+IDENTITY_READ,Read identity records,IDENTITY,1,False,Synthetic permission for read identity records
+IDENTITY_WRITE,Modify identity records,IDENTITY,5,False,Synthetic permission for modify identity records
+ROLE_ASSIGN,Assign roles,IDENTITY,8,True,Synthetic permission for assign roles
+MFA_RESET,Reset MFA factors,IDENTITY,7,False,Synthetic permission for reset mfa factors
+DATA_READ,Read internal datasets,DATA,2,False,Synthetic permission for read internal datasets
+DATA_EXPORT,Export datasets,DATA,9,True,Synthetic permission for export datasets
+DATA_DELETE,Delete datasets,DATA,10,True,Synthetic permission for delete datasets
+ADMIN_CONSOLE,Access administrative console,ADMIN,9,True,Synthetic permission for access administrative console
+AUDIT_READ,Read audit records,ADMIN,4,False,Synthetic permission for read audit records
+POLICY_EDIT,Edit security policies,ADMIN,8,True,Synthetic permission for edit security policies
+FINANCE_APPROVE,Approve transactions,FINANCE,10,True,Synthetic permission for approve transactions
+FINANCE_VIEW,View financial records,FINANCE,4,False,Synthetic permission for view financial records
+CLOUD_DEPLOY,Deploy cloud workloads,OPERATIONS,9,True,Synthetic permission for deploy cloud workloads
+CLOUD_VIEW,View cloud inventory,OPERATIONS,2,False,Synthetic permission for view cloud inventory
+ENDPOINT_CONTROL,Control endpoint agents,OPERATIONS,7,False,Synthetic permission for control endpoint agents
+REPORT_GENERATE,Generate risk reports,ADMIN,3,False,Synthetic permission for generate risk reports
+TOKEN_MANAGE,Manage API tokens,IDENTITY,8,True,Synthetic permission for manage api tokens
+REVIEW_SIGN_OFF,Sign off access reviews,ADMIN,6,False,Synthetic permission for sign off access reviews

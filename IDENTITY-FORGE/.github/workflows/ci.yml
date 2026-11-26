@@ -1,0 +1,62 @@
+name: IdentityForge CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: identityforge-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: identityforge_ci
+          POSTGRES_USER: identityforge
+          POSTGRES_PASSWORD: identityforge_ci_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U identityforge -d identityforge_ci"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DJANGO_SECRET_KEY: ci-only-identityforge-secret
+      DEBUG: "True"
+      DATABASE_ENGINE: django.db.backends.postgresql
+      DB_NAME: identityforge_ci
+      DB_USER: identityforge
+      DB_PASSWORD: identityforge_ci_password
+      DB_HOST: localhost
+      DB_PORT: "5432"
+      CELERY_TASK_ALWAYS_EAGER: "True"
+      SYNTHETIC_DATA_ONLY: "True"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -r requirements.txt
+      - run: python -m ruff check .
+      - run: python -m ruff format --check .
+      - run: python manage.py check
+      - run: python manage.py makemigrations --check --dry-run --noinput
+      - run: python manage.py migrate --noinput
+      - run: python manage.py collectstatic --noinput
+      - run: python manage.py generate_sample_data
+      - run: python manage.py seed_identityforge
+      - run: python manage.py identityforge_health --json
+      - run: python manage.py test --noinput

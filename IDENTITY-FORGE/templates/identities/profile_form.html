@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Edit profile · IdentityForge{% endblock %}
+{% block header %}Identity Profile{% endblock %}
+{% block content %}
+<section class="panel"><form method="post" class="form-grid">{% csrf_token %}
+{% for field in form %}<div class="form-field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{{ field.errors }}</div>{% endfor %}
+<div class="form-actions"><button class="button button-primary" type="submit">Save profile</button><a class="button" href="{% url 'profiles' %}">Cancel</a></div>
+</form></section>
+{% endblock %}

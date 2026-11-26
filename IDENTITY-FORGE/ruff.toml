@@ -1,0 +1,18 @@
+line-length = 100
+target-version = "py312"
+
+exclude = [
+    ".venv",
+    ".ruff_cache",
+    "staticfiles",
+    "media",
+    "samples/data",
+    "**/migrations/*",
+]
+
+[lint]
+select = ["E4", "E7", "E9", "F", "I", "B"]
+ignore = ["B008"]
+
+[format]
+quote-style = "double"

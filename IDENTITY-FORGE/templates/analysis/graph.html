@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Access Graph · IdentityForge{% endblock %}
+{% block header %}Access Relationship Graph{% endblock %}
+{% block content %}
+{{ graph_payload|json_script:"graph-data" }}
+<div class="page-heading"><div><h2>Identity network</h2><p>{{ graph_payload.summary.node_count }} nodes · {{ graph_payload.summary.edge_count }} relationships · {{ graph_payload.summary.risky_edge_count }} risky links.</p></div></div>
+<section class="panel">
+  <div class="graph-shell" id="identity-network"></div>
+  <div id="graph-tooltip" class="graph-tooltip"></div>
+  <div class="graph-legend">
+    <span><i class="legend-dot" style="background:#d4af37"></i>User</span>
+    <span><i class="legend-dot" style="background:#6ea8fe"></i>Role</span>
+    <span><i class="legend-dot" style="background:#cbd5e1"></i>Team</span>
+    <span><i class="legend-dot" style="background:#ff6b6b"></i>Resource</span>
+    <span><i class="legend-dot" style="background:#4fd1a5"></i>Permission</span>
+    <span><i class="legend-dot" style="background:#ff6b6b"></i>Risky relationship</span>
+  </div>
+</section>
+{% endblock %}
